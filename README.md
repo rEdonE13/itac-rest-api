@@ -50,11 +50,15 @@ itac.login()
 # Fetch attribute value.
 attribute_values = itac.getAttributesFromSerialNumber(
     serial_number   = "123456789", 
-    attributes      = ["ATTRIBUTE_1", "ATTRIBUTE_2"]
+    attributes      = ["ATTR_1", "ATTR_2"]
 )
 
 itac.logout()
 
 print(attribute_values)
+```
 
+### Output
+```
+['ATTR_1', '00000000079791453', '0', 'ATTR_2', '57152114070', '0']
 ```
