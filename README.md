@@ -47,8 +47,8 @@ HEADERS = {"Content-Type": "application/json"}
 Every computer has its own ID as well as its own Password defined in iTAC. These values are necessary to login a station and allow a biderectional communication with iTAC.
 ```python
 station = {
-    "id": "",
-    "pwd":      ""
+    "id":   "",
+    "pwd":  ""
 }
 ```
 
@@ -56,8 +56,8 @@ station = {
 Every employee or user registed in the iTAC system have an ID and a Password, which are necessary to authenticate the user in a [Station](#station-parameters).
 ```python
 user = {
-    "id": "",
-    "pwd":      ""
+    "id":   "",
+    "pwd":  ""
 }
 ```
 
