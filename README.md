@@ -38,16 +38,16 @@ API_URL = ""
 ```
 
 ### Headers Parameter
-Content type header as json is a must.
+Http header `Content-type` in a json format.
 ```python
 HEADERS = {"Content-Type": "application/json"}
 ```
 
 ### Station Parameters
-Every computer has its own ID or Capacity as well as its own Password defined in iTAC. This values are necessary to login a station and allow a biderectional communication with iTAC.
+Every computer has its own ID as well as its own Password defined in iTAC. These values are necessary to login a station and allow a biderectional communication with iTAC.
 ```python
 station = {
-    "capacity": "",
+    "id": "",
     "pwd":      ""
 }
 ```

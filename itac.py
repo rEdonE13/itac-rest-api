@@ -48,13 +48,13 @@ class ITAC:
         url = self.api_url + "regLogin"
         payload = {
             "sessionValidationStruct": {
-                "stationNumber":    station["capacity"],
+                "stationNumber":    station["id"],
                 "stationPassword":  station["pwd"],
                 "user":             user["id"],
                 "password":         user["pwd"],
                 "client":           "01",
                 "registrationType": "S",
-                "systemIdentifier": station["capacity"]
+                "systemIdentifier": station["id"]
             }
         }
 
@@ -79,7 +79,7 @@ class ITAC:
         url = self.api_url + "trGetSerialNumberInfo"
         payload = {
             "sessionContext":       self.session_context,
-            "stationNumber":        station["capacity"],
+            "stationNumber":        station["id"],
             "serialNumber":         serial_number,
             "serialNumberPos":      "-1",
             "serialNumberResultKeys": result_keys
@@ -97,7 +97,7 @@ class ITAC:
         url = self.api_url + "attribGetAttributeValues"
         payload = {
             "sessionContext":       self.session_context,
-            "stationNumber":        station["capacity"],
+            "stationNumber":        station["id"],
             "objectType":           0,
             "objectNumber":         serial_number,
             "objectDetail":         "-1",
@@ -117,7 +117,7 @@ class ITAC:
         url = self.api_url + "trGetStationSetting"
         payload = {
             "sessionContext":           self.session_context,
-            "stationNumber":            station["capacity"],
+            "stationNumber":            station["id"],
             "stationSettingResultKeys": station_setting_result_keys
         }
 
@@ -137,7 +137,7 @@ class ITAC:
         url = self.api_url + "trGetTopFailures"
         payload = {
             "sessionContext":           self.session_context,
-            "stationNumber":            station["capacity"],
+            "stationNumber":            station["id"],
             "trGetTopFailuresFilter":   top_failures_filter,
             "topFailuresResultKeys":    top_failures_result_keys
         }
