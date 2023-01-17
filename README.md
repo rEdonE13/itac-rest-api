@@ -1,10 +1,35 @@
 # iTAC REST API
-RESTful API for iTAC
+[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
+[![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://GitHub.com/rEdonE13)
+[![Twitter](https://badgen.net/badge/icon/twitter?icon=twitter&label)](https://twitter.com/rEdonE_13)
 
-## iTAC Session
-This API functions on a Session Context based, meaning that only after a successful authentication the API can be used.
+RESTful API for iTAC.
 
+# Table of Contents
+* [Requirements](#requirements)
+* [How to Use](#how-to-use)
+    * [Configuration File](#config-file)
+        * [API URL](#api-url-parameter)
+        * [HEADERS](#headers-parameter)
+        * [Station Parameters](#station-parameters)
+        * [User Parameters](#user-parameters)
+        * [Example](#example)
+
+# Requirements
+
+* [Python](https://www.python.org/) 3.8.x or above
+* Python Libraries: `requests`
+
+The `requirements.txt` file list all Python libraries needed for the application to work, and they will be installed by using:
+
+```bash
+pip install -r requirements.txt
+```
+
+# How to Use
 ## Config File
+The `itacconfig.py` must contains the following parameters in order to establish a connection with your iTAC System.
 
 ### API URL Parameter
 Set the REST iTAC API address.

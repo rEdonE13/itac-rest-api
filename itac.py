@@ -13,17 +13,29 @@ class ITAC:
     """
     A class to represent itac.
 
+    ***Check IMSApi documentation for Key Values.
+
     Attributes:
-        attr1       (str): Path
-        api_url     (str): RESTful API URL
+        api_url         (str):  RESTful API URL
+        headers         (dict): Http headers
+        session_context (str):  iTAC session context structure
 
     Methods:
-        create_connection():
-            Establish a connection
-        login(user):
-            Logins the given user and gets a valid session.
+        login():
+            Logins the given user in the config file and gets a valid session.
         logout():
-            Logs out the user in the session context.
+            Logs out the user in the current session context.
+        trGetSerialNumberInfo(serial_number, result_keys):
+            serial_number   (str):      Serial number
+            result_keys     list(str):  Serial number key values to be featch.
+        getAttributesFromSerialNumber(serial_number, attributes):
+            serial_number   (str):      Serial number
+            attributes      list(str):  List of attributes to be featch.
+        trGetStationSetting(station_setting_result_keys):
+            serial_number   (str):      Serial number
+        def trGetTopFailures(top_failures_filter, top_failures_result_keys):
+            trGetTopFailuresFilter  list(str):  Filter key values.
+            topFailuresResultKeys   list(str):  Result key values.
     """
     def __init__(self) -> None:
         self.api_url = API_URL
@@ -36,11 +48,11 @@ class ITAC:
         url = self.api_url + "regLogin"
         payload = {
             "sessionValidationStruct": {
-                "stationNumber": station["capacity"],
-                "stationPassword": station["pwd"],
-                "user": user["id"],
-                "password": user["pwd"],
-                "client": "01",
+                "stationNumber":    station["capacity"],
+                "stationPassword":  station["pwd"],
+                "user":             user["id"],
+                "password":         user["pwd"],
+                "client":           "01",
                 "registrationType": "S",
                 "systemIdentifier": station["capacity"]
             }
@@ -67,10 +79,10 @@ class ITAC:
         url = self.api_url + "trGetSerialNumberInfo"
         payload = {
             "sessionContext":       self.session_context,
-            "stationNumber":        "35061400",
+            "stationNumber":        station["capacity"],
             "serialNumber":         serial_number,
             "serialNumberPos":      "-1",
-            "serialNumberResultKeys":  result_keys
+            "serialNumberResultKeys": result_keys
         }
 
         res = requests.post(url=url, data=json.dumps(payload), headers=HEADERS, timeout=5)
@@ -99,13 +111,13 @@ class ITAC:
         return res.json()["result"]["attributeResultValues"]
 
 
-    def trGetStationSetting(self, station_number: str, station_setting_result_keys: list[str]) -> list[str]:
+    def trGetStationSetting(self, station_setting_result_keys: list[str]) -> list[str]:
         """Queries the actual product version and the corresponding
         work order at a station."""
         url = self.api_url + "trGetStationSetting"
         payload = {
-            "sessionContext":       self.session_context,
-            "stationNumber":        station_number,
+            "sessionContext":           self.session_context,
+            "stationNumber":            station["capacity"],
             "stationSettingResultKeys": station_setting_result_keys
         }
 
@@ -114,8 +126,7 @@ class ITAC:
         return res.json()["result"]["stationSettingResultValues"]
 
 
-    def trGetTopFailures(self, station_number: str,
-                               top_failures_filter: list[str], 
+    def trGetTopFailures(self, top_failures_filter: list[str],
                                top_failures_result_keys: list[str]
                         ) -> list[str]:
         """This function outputs the booked failures, sorted by frequency, for a freely selectable
@@ -125,8 +136,8 @@ class ITAC:
         a "TopTen" or even "TopThree" failure type analysis possible."""
         url = self.api_url + "trGetTopFailures"
         payload = {
-            "sessionContext":       self.session_context,
-            "stationNumber":        station_number,
+            "sessionContext":           self.session_context,
+            "stationNumber":            station["capacity"],
             "trGetTopFailuresFilter":   top_failures_filter,
             "topFailuresResultKeys":    top_failures_result_keys
         }

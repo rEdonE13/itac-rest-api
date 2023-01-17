@@ -7,7 +7,10 @@ itac = ITAC()
 itac.login()
 
 # Fetch SIM related data.
-sim_data = itac.getAttributesFromSerialNumber("P22002862823", ["IMEI", "IMSI", "EID"])
+serial_number = ""
+attributes = [""]
+
+sim_data = itac.getAttributesFromSerialNumber(serial_number, attributes)
 
 itac.logout()
 
