@@ -91,13 +91,24 @@ class ITAC:
 
 
     def trActivateWorkOrder(self,
-        station_number: str,
-        work_order: str,
-        serial_number: str,
-        serial_number_pos: str,
-        process_layer: int,
-        flag: int) -> list[str]:
-        """Activate work order."""        
+            station_number: str,
+            work_order: str,
+            serial_number: str,
+            serial_number_pos: str = "-1",
+            process_layer: int = 0,
+            flag: int = 1
+    ) -> list[str]:
+        """
+        This function activates or deactivates the passed work order on the station or line.
+        
+        Parameters
+            station_number (str): Station number of the work station in the iTAC system
+            work_order (str): Number of a production order
+            serial_number (str): Serial number of the panel
+            serial_number_pos (str): Position of the single panel in the unit-array
+            process_layer (int): Orientation of the PCB during the work step [0; 1; 2; 3]
+            flag (int): Mode "Work order activation" [1; 11; 21; 2; 12; 22; 3; 13; 23; 4; 14; 24]
+        """
         url = self.api_url + "trActivateWorkOrder"
         payload = {
             "sessionContext":       self.session_context,
@@ -140,7 +151,16 @@ class ITAC:
             work_order: str,
             part_number: str,
             number_of_records: int) -> list[str] :
-        """Get next serial number from ID Generator."""
+        """
+        This function returns the serial numbers provided by the iTAC system for a part 
+        that is to be produced.
+
+        Parameters
+            station_number (str): Station number of the work station in the iTAC system
+            work_order (str): Number of a production order; if necessary, with the ID alternative that is to be used for the ID generator
+            part_number (str): Part number in the iTAC system
+            number_of_records (int): Default value for the number of entries in the array
+        """
         url = self.api_url + "trGetNextSerialNumber"
         payload = {
             "sessionContext":       self.session_context,
@@ -260,6 +280,23 @@ class ITAC:
             "cycleTime":                cycle_time,
             "serialNumberUploadKeys":   serial_number_upload_keys,
             "serialNumberUploadValues": serial_number_upload_values,
+        }
+
+        res = requests.post(url=url, data=json.dumps(payload), headers=HEADERS, timeout=5)
+        res.raise_for_status()
+        return res.json()["result"]
+
+
+    def trRemoveSerialNumberFromOrder(self,
+            station_number: str,
+            remove_serial_number_keys
+        ) -> list[str]:
+        """function descr"""
+        url = self.api_url + "trRemoveSerialNumberFromOrder"
+        payload = {
+            "sessionContext":           self.session_context,
+            "stationNumber":            station_number,
+            "removeSerialNumberKeys":   remove_serial_number_keys
         }
 
         res = requests.post(url=url, data=json.dumps(payload), headers=HEADERS, timeout=5)
